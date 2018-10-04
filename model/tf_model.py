@@ -92,7 +92,9 @@ class ConvNet:
                 epoch_cost /= num_batches
                 print('Cost for epoch {}: {}'.format(epoch, epoch_cost))
 
-            print(tf.nn.softmax(sess.run([Z5], feed_dict={X:X_test})))
+            pred = tf.nn.softmax(Z5)
+            accuracy = tf.reduce_mean(tf.cast(tf.equal(tf.argmax(pred, 1), tf.argmax(y, 1)), 'float'))
+            print(accuracy.eval({X: X_test, y: y_test}))
 
 
     def predict(self): pass
